@@ -57,6 +57,13 @@ public class DestroyEditorOnly : MonoBehaviour
     [MenuItem("Tools/Enable DestroyEditorOnly")]
     public static void EnableDestroyEditorOnly()
     {
+        var existComponent = FindObjectOfType<DestroyEditorOnly>();
+        if (existComponent != null)
+        {
+            existComponent.gameObject.SetActive(true);
+            existComponent.enabled = true;
+            return;
+        }
         var go = new GameObject("DestroyEditorOnly");
         go.AddComponent<DestroyEditorOnly>();
     }
