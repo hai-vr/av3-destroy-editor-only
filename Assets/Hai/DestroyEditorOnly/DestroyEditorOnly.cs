@@ -57,11 +57,9 @@ public class DestroyEditorOnly : MonoBehaviour
     [MenuItem("Tools/Enable DestroyEditorOnly")]
     public static void EnableDestroyEditorOnly()
     {
-        var existComponent = FindObjectOfType<DestroyEditorOnly>();
-        if (existComponent != null)
+        var roots = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().GetRootGameObjects();
+        if (roots.Any(rootGo => rootGo.GetComponent<DestroyEditorOnly>() != null))
         {
-            existComponent.gameObject.SetActive(true);
-            existComponent.enabled = true;
             return;
         }
         var go = new GameObject("DestroyEditorOnly");
