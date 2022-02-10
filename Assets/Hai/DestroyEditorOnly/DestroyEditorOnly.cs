@@ -22,7 +22,11 @@
 
 using UnityEditor;
 using UnityEngine;
+#if VRC_SDK_VRCSDK3
 using VRC.SDK3.Avatars.Components;
+#elif VRC_SDK_VRCSDK2
+using VRCAvatarDescriptor = VRCSDK2.VRC_AvatarDescriptor;
+#endif
 
 public class DestroyEditorOnly : MonoBehaviour
 {
@@ -45,7 +49,11 @@ public class DestroyEditorOnly : MonoBehaviour
         }
         else
         {
+#if VRC_SDK_VRCSDK3 || VRC_SDK_VRCSDK2
             var isSubjectAnAvatar = subject.GetComponent<VRCAvatarDescriptor>() != null;
+#else
+            var isSubjectAnAvatar = false;
+#endif
             foreach (Transform child in subject.transform)
             {
                 TryDestroyRecursive(child.gameObject, destroyPermitted || isSubjectAnAvatar);
